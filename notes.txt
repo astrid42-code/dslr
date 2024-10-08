@@ -1,0 +1,9 @@
+describe.py 
+> load la data
+> calculer pour chaque colonne si c'est possible : 
+    total, moyenne, standard deviation, minimum, maximum,
+    pourcentage à 25, 50 et 75%
+    ATTENTION : refaire chacune des fonctions (librairie interdite)
+si pas possible : afficher "No data to print"
+> afficher pour chaque feature les resultats avec les fonctions ci-dessus
+
