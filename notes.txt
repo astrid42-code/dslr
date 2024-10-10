@@ -4,6 +4,20 @@ describe.py
     total, moyenne, standard deviation, minimum, maximum,
     pourcentage à 25, 50 et 75%
     ATTENTION : refaire chacune des fonctions (librairie interdite)
-si pas possible : afficher "No data to print"
+si pas possible : afficher "No numerical data to print" 
+    = si la data n'est ni un int ni un float
 > afficher pour chaque feature les resultats avec les fonctions ci-dessus
 
+the main difference: 
+Linear Regression focuses on predicting continuous values, 
+while Logistic Regression is designed specifically for binary classification (Yes or No).
+So although they have similar-sounding names, 
+there are key differences in their applications, equations, and objectives.
+regression logistique utilisée pour classifier les données en 2 groupes
+(yes or no, true or false, 1 ou 0) 
+> pour analyser les données et décider si le résultat est ok ou non
+exemple :
+insurance companies decide whether or not to approve a new policy 
+based on a driver's history, credit history and other such factors.
+= en fct de l'analyse des variables, on va rendre un résultat binaire (oui ou non)
+> elle calcule la probabilité d'un événement (si oui ou non ça va se produire)
