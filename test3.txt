@@ -1,0 +1,4 @@
+<class 'str'>
+<class 'str'>
+<class 'float'>
+We can't calculate without numbers We can't calculate without numbers 72202.0

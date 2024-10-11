@@ -49,20 +49,22 @@ def _max(data):
             _max = data[i]
     return (_max)
 
-
-def percentile_25(data):
+def percentile(data, perc):
     '''
-    calculate percentile (25%)
-    '''
-
-
-def percentile_50(data):
-    '''
-    calculate percentile (50%)
+    calculate percentile 
+    perc = 25, 50, 75
     '''
 
+    print(type(data[0]))
+    if type(data[0]) is not float and type(data[0]) is not int:
+        # print("We can't calculate without numbers")  # à modifier ensuite (à mettre dans le tableau de resulats)
+        return (-1)
+    # percentile's position
+    pos = (len(data) + 1) * (perc  / 100)
 
-def percentile_75(data):
-    '''
-    calculate percentile (75%)
-    '''
+    # value at the position
+    tmp1 = data[int(pos)]
+    tmp2 = data[int(pos) + 1]
+    val = (tmp1 + tmp2) / 2
+
+    return (val)
