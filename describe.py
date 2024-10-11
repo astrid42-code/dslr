@@ -2,7 +2,7 @@ from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-from tools import percentile
+from tools import percentile, _mean, _std, _min, _max
 
 
 def main():
@@ -22,19 +22,40 @@ def main():
     data = read_csv("datasets/dataset_train.csv").to_numpy().transpose()
     # print(data) # type = <class 'numpy.ndarray'>
     # print(data[0])
-    # for i in data:
-    #     print(type(i), i)
-    perc_25 = percentile(data[4], 25)
-    if perc_25 == -1:
-        perc_25 = "We can't calculate without numbers"
-    perc_50 = percentile(data[5], 50)
-    if perc_50 == -1:
-        perc_50 = "We can't calculate without numbers"
-    perc_75 = percentile(data[6], 75)
-    if perc_75 == -1:
-        perc_75 = "We can't calculate without numbers"
+    mean = []
+    std = []
+    min_ = []
+    max_ = []
+    perc_25 = []
+    perc_50 = []
+    perc_75 = []
+    
+    count = len(data[0])
 
-    print(perc_25, perc_50, perc_75)
+    for i in range(len(data)):
+        # print(i, data[i])
+        # mean += [_mean(data[i])]
+        # std += [_std(data[i])]
+        # min_ += [_min(data[i])]
+        max_ += [_max(data[i])]
+        perc_25 += [percentile(data[i], 25)]
+        # if perc_25[i] == -1:
+        #     perc_25[i] = "We can't calculate without numbers"
+        perc_50 += [percentile(data[i], 50)]
+        # if perc_50[i] == -1:
+        #     perc_50[i] = "We can't calculate without numbers"
+        perc_75 += [percentile(data[i], 75)]
+        # if perc_75[i] == -1:
+        #     perc_75[i] = "We can't calculate without numbers"
+    
+    print("count", count)
+    print("mean", mean)
+    print("std", std)
+    print("min", min_)
+    print("max", max_)
+    print("25", perc_25)
+    print("50", perc_50)
+    print("75", perc_75)
 
 
 if __name__ == "__main__":
