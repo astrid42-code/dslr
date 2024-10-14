@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 from tools import percentile, _count, _mean, _std, _min, _max
-
+import pprint
 
 def main():
     # Load data
@@ -36,21 +36,38 @@ def main():
         # print(i, data[i])
         count += [_count(data[i])]
         mean += [_mean(data[i])]
-        std += [_std(data[i])]
+        tmp = mean[i]
+        # print(tmp)
+        std += [_std(data[i], tmp)]
         min_ += [_min(data[i])]
         max_ += [_max(data[i])]
         perc_25 += [percentile(data[i], 25)]
         perc_50 += [percentile(data[i], 50)]
         perc_75 += [percentile(data[i], 75)]
    
-    print("count", count)
-    print("mean", mean)
-    print("std", std)
-    print("min", min_)
-    print("max", max_)
-    print("25", perc_25)
-    print("50", perc_50)
-    print("75", perc_75)
+    # print("count", count)
+    # print("mean", mean)
+    # print("std", std)
+    # print("min", min_)
+    # print("max", max_)
+    # print("25", perc_25)
+    # print("50", perc_50)
+    # print("75", perc_75)
+
+    res = {
+            "count": count, 
+            "mean": mean,
+            "std": std, 
+            "min": min_, 
+            "max": max_, 
+            "perc 25": perc_25, 
+            "perc 50": perc_50, 
+            "perc 75": perc_75
+    }
+    print("coucou")
+    # print('{}'.format(res), sep='\n')
+    for key, value in res.items():
+        print(f"{key}: {value}")
 
 
 if __name__ == "__main__":

@@ -11,8 +11,7 @@ def _count(data):
         return (len(data))
     _tmp = data.astype(float)
     _count = _tmp[~isnan(_tmp)]  # to remove nan from a list : https://stackoverflow.com/questions/11620914/how-do-i-remove-nan-values-from-a-numpy-array
-    # print(_tmp)
-    # print("c= ", len(_count))
+
     return (len(_count))
 
 
@@ -21,33 +20,35 @@ def _mean(data):
     calculate mean
     '''
 
-    _mean = 0.0
+    mean = 0.0
     for i in data:
+        # print("type i", type(i))
         if type(i) is not float and type(i) is not int:
-            # print("coucou")
             return ("We can't calculate without numbers")
-        if isnan(i) is True:
-                continue
-                # pass
-        _mean += i
-    _mean /= len(data)
-    return(_mean)
+        if isnan(i):
+            continue
+        mean += i
+    mean /= len(data)
+    # print("type mean", type(mean))
+    return(mean)
 
 
-def _std(data):
+def _std(data, mean):
     '''
     calculate standard deviation
     '''
     
     res = 0.0
-    mean = _mean(data)
+
     for i in data:
         if type(i) is not float and type(i) is not int:
             # print("coucou")
             return ("We can't calculate without numbers")
-        if i == 'nan':
-                continue
-        res += (i - mean) ** 2
+        if isnan(i):    
+            continue
+            # i = 0
+        res += (float(i) - mean) ** 2
+    # print(res)
     return (res / len(data))
 
 
@@ -63,8 +64,8 @@ def _min(data):
             # print("coucou")
             return ("We can't calculate without numbers")
         # print("data_i", data[i])
-        if i == 'nan':
-                continue
+        if isnan(i):
+            continue
         if i < _min:
             _min = i
     # print("_min", _min)
@@ -82,7 +83,7 @@ def _max(data):
             # print("coucou")
             return ("We can't calculate without numbers")
         
-        if i == 'nan':
+        if isnan(i):
             continue
         if i > _max:
             _max = i
