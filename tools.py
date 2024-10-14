@@ -1,3 +1,20 @@
+from numpy import isnan
+
+
+def _count(data):
+    '''
+    Calculate total amount
+    '''
+
+    if type(data[0]) is not float and type(data[0]) is not int:
+        # print("cocuou")  # à modifier ensuite (à mettre dans le tableau de resulats)
+        return (len(data))
+    _tmp = data.astype(float)
+    _count = _tmp[~isnan(_tmp)]  # to remove nan from a list : https://stackoverflow.com/questions/11620914/how-do-i-remove-nan-values-from-a-numpy-array
+    # print(_tmp)
+    # print("c= ", len(_count))
+    return (len(_count))
+
 
 def _mean(data):
     '''
@@ -7,11 +24,12 @@ def _mean(data):
     _mean = 0.0
     for i in data:
         if type(i) is not float and type(i) is not int:
-            print("coucou")
+            # print("coucou")
             return ("We can't calculate without numbers")
-        if i == 'nan':
+        if isnan(i) is True:
                 continue
-        _mean += data[i]
+                # pass
+        _mean += i
     _mean /= len(data)
     return(_mean)
 
@@ -25,11 +43,11 @@ def _std(data):
     mean = _mean(data)
     for i in data:
         if type(i) is not float and type(i) is not int:
-            print("coucou")
+            # print("coucou")
             return ("We can't calculate without numbers")
         if i == 'nan':
                 continue
-        res += (data[i] - mean) ** 2
+        res += (i - mean) ** 2
     return (res / len(data))
 
 
@@ -42,13 +60,13 @@ def _min(data):
     _min = data[0]
     for i in data:
         if type(i) is not float and type(i) is not int:
-            print("coucou")
+            # print("coucou")
             return ("We can't calculate without numbers")
         # print("data_i", data[i])
         if i == 'nan':
                 continue
-        if data[i] < _min:
-            _min = data[i]
+        if i < _min:
+            _min = i
     # print("_min", _min)
     return (_min)
 
@@ -59,9 +77,9 @@ def _max(data):
     '''
     _max = data[0]
     for i in data:
-        print("i", i)
+        # print("i", i)
         if type(i) is not float and type(i) is not int:
-            print("coucou")
+            # print("coucou")
             return ("We can't calculate without numbers")
         
         if i == 'nan':
@@ -82,7 +100,7 @@ def percentile(data, perc):
         return ("We can't calculate without numbers")
     
     # percentile's position
-    pos = (len(data) + 1) * (perc  / 100)
+    pos = (len(data) - 1) * (perc  / 100)
 
     # value at the position
     tmp1 = data[int(pos)]

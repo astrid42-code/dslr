@@ -2,7 +2,7 @@ from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-from tools import percentile, _mean, _std, _min, _max
+from tools import percentile, _count, _mean, _std, _min, _max
 
 
 def main():
@@ -22,6 +22,7 @@ def main():
     data = read_csv("datasets/dataset_train.csv").to_numpy().transpose()
     # print(data) # type = <class 'numpy.ndarray'>
     # print(data[0])
+    count = []
     mean = []
     std = []
     min_ = []
@@ -30,24 +31,18 @@ def main():
     perc_50 = []
     perc_75 = []
     
-    count = len(data[0])
-
+    # print(data[2][4])
     for i in range(len(data)):
         # print(i, data[i])
-        # mean += [_mean(data[i])]
-        # std += [_std(data[i])]
-        # min_ += [_min(data[i])]
+        count += [_count(data[i])]
+        mean += [_mean(data[i])]
+        std += [_std(data[i])]
+        min_ += [_min(data[i])]
         max_ += [_max(data[i])]
         perc_25 += [percentile(data[i], 25)]
-        # if perc_25[i] == -1:
-        #     perc_25[i] = "We can't calculate without numbers"
         perc_50 += [percentile(data[i], 50)]
-        # if perc_50[i] == -1:
-        #     perc_50[i] = "We can't calculate without numbers"
         perc_75 += [percentile(data[i], 75)]
-        # if perc_75[i] == -1:
-        #     perc_75[i] = "We can't calculate without numbers"
-    
+   
     print("count", count)
     print("mean", mean)
     print("std", std)
