@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 from tools import percentile, _count, _mean, _std, _min, _max
-import pprint
+import csv
 
 def main():
     # Load data
@@ -11,12 +11,13 @@ def main():
     if len(sys.argv) != 2:
         print("You need to give a path as argument")
         exit()
-    try:
-        data_path = "datasets/" + sys.argv[1]
-        # print(data_path)
-        dataset = read_csv(data_path)
-    except Exception:
-        return print("ERROR : Unvalid path/file for data")
+    # try:
+    #     data_path = "datasets/" + sys.argv[1]
+    #     # data_path = sys.argv[1]
+    #     # print(data_path)
+    #     # dataset = read_csv(data_path)
+    # except Exception:
+    #     return print("ERROR : Unvalid path/file for data")
     # print(dataset)  # type = <class 'pandas.core.frame.DataFrame'>
 
     data = read_csv("datasets/dataset_train.csv").to_numpy().transpose()
@@ -64,11 +65,21 @@ def main():
             "perc 50": perc_50, 
             "perc 75": perc_75
     }
-    print("coucou")
+    # print("coucou")
     # print('{}'.format(res), sep='\n')
     for key, value in res.items():
         print(f"{key}: {value}")
 
+    # a revoir:
+
+    # with open('newdataset.csv', 'w', newline='') as csvfile:
+    #     newdata = csv.writer(csvfile, delimiter=' ',
+    #                             quotechar='|')
+    #     for i, j in res.items():
+    #         newdata.writerow([i, j])
+    #         # newdata.writerow()
+    #     print_data = read_csv('newdataset.csv').to_numpy().transpose()
+    #     print(print_data)
 
 if __name__ == "__main__":
     main()
