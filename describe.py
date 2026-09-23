@@ -1,28 +1,36 @@
 from pandas import read_csv, DataFrame
+# import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
 from tools import percentile, _count, _mean, _std, _min, _max
 import csv
 
-def main():
-    # Load data
+def numeric_data(data):
+    """
+        Create a list of columns with only numerics data 
+    """
+    num_col = []
 
-    if len(sys.argv) != 2:
-        print("You need to give a path as argument")
-        exit()
-    # try:
-    #     data_path = "datasets/" + sys.argv[1]
-    #     # data_path = sys.argv[1]
-    #     # print(data_path)
-    #     # dataset = read_csv(data_path)
-    # except Exception:
-    #     return print("ERROR : Unvalid path/file for data")
-    # print(dataset)  # type = <class 'pandas.core.frame.DataFrame'>
+    for i in data.columns:
+        if isinstance(data[i][0], float):
+            num_col.append(i)
+        else:
+            continue
+        # try:
+        #     if isinstance(data[i][0], float):
+        #         num_col.append(i)
+        # except:
+        #     continue
+    return(num_col)
 
-    data = read_csv("datasets/dataset_train.csv").to_numpy().transpose()
-    # print(data) # type = <class 'numpy.ndarray'>
-    # print(data[0])
+def my_describe(data):
+
+    num = numeric_data(data)
+    print(num)
+
+
+def todo():
     count = []
     mean = []
     std = []
@@ -67,19 +75,30 @@ def main():
     }
     # print("coucou")
     # print('{}'.format(res), sep='\n')
-    for key, value in res.items():
-        print(f"{key}: {value}")
 
-    # a revoir:
+    # for key, value in res.items():
+    #     print(f"{key}: {value}")
 
-    # with open('newdataset.csv', 'w', newline='') as csvfile:
-    #     newdata = csv.writer(csvfile, delimiter=' ',
-    #                             quotechar='|')
-    #     for i, j in res.items():
-    #         newdata.writerow([i, j])
-    #         # newdata.writerow()
-    #     print_data = read_csv('newdataset.csv').to_numpy().transpose()
-    #     print(print_data)
+
+def main():
+    # Load data
+    if len(sys.argv) != 2:
+        print("You need to give a path as an argument, e.g. dataset_test.csv")
+        exit()
+    try:
+        data_path = "./datasets/" + sys.argv[1]
+        data = read_csv(data_path, index_col = 0)
+    except Exception:
+        return print("ERROR : Unvalid path/file for data")
+
+
+    # data = read_csv("datasets/dataset_train.csv").to_numpy().transpose() # to obtain # type = <class 'numpy.ndarray'>
+    # data = read_csv(sys.argv[1], index_col = 0)
+    # print(type(data)) 
+    # print(data)
+    # print(data[0])
+
+    my_describe(data)
 
 if __name__ == "__main__":
     main()
