@@ -1,5 +1,14 @@
 describe.py 
 > load la data
+> rechercher dans le tableau les colonnes avec des données numériques uniquement 
+utiliser dataframe (tableau à deux dimensions) 
+pour ensuite pouvoir faire les calculs sur la data numérique à entrainer (en fct de cette data, chacun.e aura une maison attribuée)
+la data id (nom, prénom, age, main forte, ...) n'est pas utile sur cette phase
+elle le sera pour l'attribution des maisons ensuite
+nécessite de garder la data en ordre pour chacun.e
+> préparer le tableau avec la data numérique décrite (refonte de "describe() donc) en dataframe avec:
+ index : count (somme), mean, ...
+ col : nom des col avec data numériques (les cours avec les notes données)
 > calculer pour chaque colonne si c'est possible : 
     total, moyenne, standard deviation, minimum, maximum,
     pourcentage à 25, 50 et 75%
