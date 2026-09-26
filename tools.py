@@ -8,17 +8,16 @@ def _count(data, col_index):
     '''
 
     # print(col_index)
-    count = 0.0
     count_list = []
     for i in data:
         # print('data[i]', data[i])
         if i in col_index:
+            count = 0.0
             # print("datai", data[i])
             for c in data[i]:
-                # print(c)
+                # # print(c)
                 if isfinite(c):
-                    count+= c
-            # print("count", count)
+                    count+=1
                 
             count_list.append(count)
         print(count_list)
@@ -28,22 +27,31 @@ def _count(data, col_index):
     return (count_list)
 
 
-def _mean(data):
+def _mean(data, col_index, count):
     '''
     calculate mean
     '''
-
-    mean = 0.0
+    mean_list = []
     for i in data:
+        if i in col_index:
+            mean = 0.0
+            j = 0
+            for c in data[i]:
+                # print(c)
+                if isfinite(c):
+                    mean += c
+            mean /= count[j]
+            # print("mean", mean)
+            mean_list.append(mean)
+            j+=1
         # print("type i", type(i))
-        if type(i) is not float and type(i) is not int:
-            return ("We can't calculate without numbers")
-        if isnan(i):
-            continue
-        mean += i
-    mean /= len(data)
+        # if type(i) is not float and type(i) is not int:
+        #     return ("We can't calculate without numbers")
+        # if isnan(i):
+        #     continue
+        # mean += i
     # print("type mean", type(mean))
-    return(mean)
+    return(mean_list)
 
 
 def _std(data, mean):

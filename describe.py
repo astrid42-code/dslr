@@ -39,8 +39,7 @@ def fill_df(data, df, col_index):
     print(data)
 
     count = _count(data, col_index)
-    # count = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    # mean = []
+    mean = _mean(data, col_index, count)
     # std = []
     # min_ = []
     # max_ = []
@@ -53,8 +52,7 @@ def fill_df(data, df, col_index):
         # print('data[i]', data[i])
         if i in col_index:
             df.loc["Count", df.columns[n]] = count[n]
-        
-            # lancer la fct count et assigner la valeur trouvée dans la case "Count[n]" en mettant n = 0 au dessus et n+=1 à la fin de la boucle
+            df.loc["Mean", df.columns[n]] = mean[n]
             n+=1
     # print(data)
     print(df)
