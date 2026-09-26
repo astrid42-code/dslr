@@ -1,18 +1,31 @@
-from numpy import isnan
+# from numpy import isnan
+from math import isfinite
 
 
-def _count(data):
+def _count(data, col_index):
     '''
     Calculate total amount
     '''
 
-    if type(data[0]) is not float and type(data[0]) is not int:
-        # print("cocuou")  # à modifier ensuite (à mettre dans le tableau de resulats)
-        return (len(data))
-    _tmp = data.astype(float)
-    _count = _tmp[~isnan(_tmp)]  # to remove nan from a list : https://stackoverflow.com/questions/11620914/how-do-i-remove-nan-values-from-a-numpy-array
+    # print(col_index)
+    count = 0.0
+    count_list = []
+    for i in data:
+        # print('data[i]', data[i])
+        if i in col_index:
+            # print("datai", data[i])
+            for c in data[i]:
+                # print(c)
+                if isfinite(c):
+                    count+= c
+            # print("count", count)
+                
+            count_list.append(count)
+        print(count_list)
+        print(len(count_list))
 
-    return (len(_count))
+   
+    return (count_list)
 
 
 def _mean(data):

@@ -3,18 +3,19 @@ from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import tools
 from tools import percentile, _count, _mean, _std, _min, _max
 import csv
 
-def numeric_data(data):
+def find_col_index(data):
     """
-        Create a list of columns with only numerics data 
+        Create the list of columns names with only numeric data 
     """
-    num_col = []
+    col_index = []
 
     for i in data.columns:
         if isinstance(data[i][0], float):
-            num_col.append(i)
+            col_index.append(i)
         else:
             continue
         # try:
@@ -22,37 +23,64 @@ def numeric_data(data):
         #         num_col.append(i)
         # except:
         #     continue
-    return(num_col)
+    return(col_index)
+
+def create_df(col_index):
+    # calculer les résultats de chaque index pour pouvoir les envoyer directement dans le nveau dataframe 
+    # faire boucle donnant les index puis les colonnes (ou l'inverse?) 
+    
+    if col_index == []:
+        exit
+    row_index = ["Count", "Mean", "Std", "Min", "25%","50%", "75%", "Max"]
+    my_df = DataFrame(data= np.zeros((len(row_index), len(col_index))), index= row_index, columns= col_index)
+    return(my_df)
+
+def fill_df(data, df, col_index):
+    print(data)
+
+    count = _count(data, col_index)
+    # count = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    # mean = []
+    # std = []
+    # min_ = []
+    # max_ = []
+    # perc_25 = []
+    # perc_50 = []
+    # perc_75 = []
+    n = 0
+    for i in data:
+        # print('i', i)
+        # print('data[i]', data[i])
+        if i in col_index:
+            df.loc["Count", df.columns[n]] = count[n]
+        
+            # lancer la fct count et assigner la valeur trouvée dans la case "Count[n]" en mettant n = 0 au dessus et n+=1 à la fin de la boucle
+            n+=1
+    # print(data)
+    print(df)
+
 
 def my_describe(data):
 
-    num = numeric_data(data)
-    print(num)
+    col_index = find_col_index(data)
+    df = create_df(col_index)
+    fill_df(data, df, col_index)
 
-
-def todo():
-    count = []
-    mean = []
-    std = []
-    min_ = []
-    max_ = []
-    perc_25 = []
-    perc_50 = []
-    perc_75 = []
+def tools(data):
     
     # print(data[2][4])
     for i in range(len(data)):
         # print(i, data[i])
-        count += [_count(data[i])]
-        mean += [_mean(data[i])]
+        count += [tools._count(data[i])]
+        mean += [tools._mean(data[i])]
         tmp = mean[i]
         # print(tmp)
-        std += [_std(data[i], tmp)]
-        min_ += [_min(data[i])]
-        max_ += [_max(data[i])]
-        perc_25 += [percentile(data[i], 25)]
-        perc_50 += [percentile(data[i], 50)]
-        perc_75 += [percentile(data[i], 75)]
+        std += [tools._std(data[i], tmp)]
+        min_ += [tools._min(data[i])]
+        max_ += [tools._max(data[i])]
+        perc_25 += [tools.percentile(data[i], 25)]
+        perc_50 += [tools.percentile(data[i], 50)]
+        perc_75 += [tools.percentile(data[i], 75)]
    
     # print("count", count)
     # print("mean", mean)
