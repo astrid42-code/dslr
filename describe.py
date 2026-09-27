@@ -3,8 +3,8 @@ from pandas import read_csv, DataFrame
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-import tools
-from tools import percentile, _count, _mean, _std, _min, _max
+# import tools
+from tools import _perc_25, _count, _mean, _std, _min, _max # perc_50, perc_75, 
 import csv
 
 def find_col_index(data):
@@ -36,16 +36,16 @@ def create_df(col_index):
     return(my_df)
 
 def fill_df(data, df, col_index):
-    print(data)
+    # print(data)
 
     count = _count(data, col_index)
     mean = _mean(data, col_index, count)
     # std = []
-    # min_ = []
-    # max_ = []
-    # perc_25 = []
-    # perc_50 = []
-    # perc_75 = []
+    mini = _min(data, col_index)
+    maxi = _max(data, col_index)
+    perc_25 = _perc_25(data, col_index)
+    # perc_50 = perc_50(data, col_index)
+    # perc_75 = perc_75(data, col_index)
     n = 0
     for i in data:
         # print('i', i)
@@ -53,8 +53,11 @@ def fill_df(data, df, col_index):
         if i in col_index:
             df.loc["Count", df.columns[n]] = count[n]
             df.loc["Mean", df.columns[n]] = mean[n]
+            df.loc["Min", df.columns[n]] = mini[n]
+            df.loc["Max", df.columns[n]] = maxi[n]
+            df.loc["25%", df.columns[n]] = perc_25[n]
             n+=1
-    # print(data)
+
     print(df)
 
 
@@ -77,8 +80,8 @@ def tools(data):
         min_ += [tools._min(data[i])]
         max_ += [tools._max(data[i])]
         perc_25 += [tools.percentile(data[i], 25)]
-        perc_50 += [tools.percentile(data[i], 50)]
-        perc_75 += [tools.percentile(data[i], 75)]
+        # perc_50 += [tools.percentile(data[i], 50)]
+        # perc_75 += [tools.percentile(data[i], 75)]
    
     # print("count", count)
     # print("mean", mean)

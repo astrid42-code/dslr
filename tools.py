@@ -1,10 +1,11 @@
-# from numpy import isnan
+from numpy import inf
 from math import isfinite
 
 
 def _count(data, col_index):
     '''
-    Calculate total amount
+    calculate number of numeric data for each numeric column 
+    returns an ordered list of all counts
     '''
 
     # print(col_index)
@@ -12,14 +13,14 @@ def _count(data, col_index):
     for i in data:
         # print('data[i]', data[i])
         if i in col_index:
-            count = 0.0
+            _count = 0.0
             # print("datai", data[i])
             for c in data[i]:
                 # # print(c)
                 if isfinite(c):
-                    count+=1
+                    _count+=1
                 
-            count_list.append(count)
+            count_list.append(_count)
         print(count_list)
         print(len(count_list))
 
@@ -29,29 +30,61 @@ def _count(data, col_index):
 
 def _mean(data, col_index, count):
     '''
-    calculate mean
+    calculate mean for each numeric column 
+    formula : total amount / count (count = the number of numeric data in the column)
+    returns an ordered list of all means
     '''
     mean_list = []
     for i in data:
         if i in col_index:
-            mean = 0.0
+            _mean = 0.0
             j = 0
             for c in data[i]:
                 # print(c)
                 if isfinite(c):
-                    mean += c
-            mean /= count[j]
+                    _mean += c
+            _mean /= count[j]
             # print("mean", mean)
-            mean_list.append(mean)
+            mean_list.append(_mean)
             j+=1
-        # print("type i", type(i))
-        # if type(i) is not float and type(i) is not int:
-        #     return ("We can't calculate without numbers")
-        # if isnan(i):
-        #     continue
-        # mean += i
-    # print("type mean", type(mean))
     return(mean_list)
+
+def _min(data, col_index):
+    '''
+    find min data for each numeric column 
+    returns an ordered list of all mins
+    '''
+
+    min_list = []
+    for i in data:
+        if i in col_index:
+            _min = inf
+            for c in data[i]:
+                if isfinite(c):
+                    if c < _min:
+                        _min = c
+                    
+            min_list.append(_min)
+    return(min_list)
+
+
+def _max(data, col_index):
+    '''
+    find max data for each numeric column 
+    returns an ordered list of all maxs
+    '''
+
+    max_list = []
+    for i in data:
+        if i in col_index:
+            _max = -inf
+            for c in data[i]:
+                if isfinite(c):
+                    if c > _max:
+                        _max = c
+                        
+            max_list.append(_max)
+    return(max_list)
 
 
 def _std(data, mean):
@@ -72,44 +105,28 @@ def _std(data, mean):
     # print(res)
     return (res / len(data))
 
+def _perc_25(data, col_index):
+    '''
+    calculate percentile 25
+    returns an ordered list of all percentile 25
+    '''
 
-def _min(data):
-    '''
-    find min data
-    '''
-    
-    # print("data0", data[0])
-    _min = data[0]
+    perc_25_list = []
     for i in data:
-        if type(i) is not float and type(i) is not int:
-            # print("coucou")
-            return ("We can't calculate without numbers")
-        # print("data_i", data[i])
-        if isnan(i):
-            continue
-        if i < _min:
-            _min = i
-    # print("_min", _min)
-    return (_min)
+        val = 0
+        if i in col_index:
 
-
-def _max(data):
-    '''
-    find max data
-    '''
-    _max = data[0]
-    for i in data:
-        # print("i", i)
-        if type(i) is not float and type(i) is not int:
-            # print("coucou")
-            return ("We can't calculate without numbers")
-        
-        if isnan(i):
-            continue
-        if i > _max:
-            _max = i
-    # print("_max", _max)
-    return (_max)
+            # percentile's position
+            pos = (len(data) - 1) * 0.25
+            print("pos", pos, type(pos))
+                    
+            # value at the position
+            # tmp1 = data[int(pos)]
+            # tmp2 = data[int(pos) + 1]
+            # val = (tmp1 + tmp2) / 2
+                            
+        perc_25_list.append(val)
+    return(perc_25_list)
 
 def percentile(data, perc):
     '''
