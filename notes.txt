@@ -1,5 +1,6 @@
 describe.py 
 > load la data
+# https://docs.python.org/fr/3/library/csv.html
 > rechercher dans le tableau les colonnes avec des données numériques uniquement = option include de describe()
 la data id (nom, prénom, age, main forte, ...) n'est pas utile sur cette phase
 elle le sera pour l'attribution des maisons ensuite
@@ -13,6 +14,39 @@ nécessite de garder la data en ordre pour chacun.e
     ATTENTION : refaire chacune des fonctions (librairie interdite)
 si pas possible : afficher "No numerical data to print" 
     = si la data n'est ni un int ni un float
+
+
+Calcul des percentiles :
+Pandas utilise par défaut la méthode d'interpolation linear.
+
+La formule est :
+
+h=(n−1)×p
+
+Avec :
+
+n : nombre de valeurs ;
+
+p : percentile exprimé entre 0 et 1 ;
+
+h : position théorique dans la liste triée.
+
+On distingue ensuite deux cas :
+
+Si h est un entier, on récupère directement la valeur à cette position.
+
+Sinon, on interpole entre les deux valeurs qui encadrent cette position.
+
+Par exemple, si :
+
+data_ordered = [10, 20, 30, 40, 50]
+
+Le percentile 25 % correspond à :
+h=(5−1)×0.25=1
+
+Donc le résultat est 20, et non (20 + 30) / 2 = 25
+
+
 > afficher pour chaque feature les resultats avec les fonctions ci-dessus
 
 the main difference: 

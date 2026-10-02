@@ -21,8 +21,8 @@ def _count(data, col_index):
                     _count+=1
                 
             count_list.append(_count)
-        print(count_list)
-        print(len(count_list))
+        # print(count_list)
+        # print(len(count_list))
 
    
     return (count_list)
@@ -105,45 +105,98 @@ def _std(data, mean):
     # print(res)
     return (res / len(data))
 
-def _perc_25(data, col_index):
+
+def _perc_75(data, col_index, count):
     '''
     calculate percentile 25
     returns an ordered list of all percentile 25
     '''
 
-    perc_25_list = []
+    perc_75_list = []
+    j = 0
     for i in data:
         val = 0
         if i in col_index:
-
+            # print(j, count[j])
             # percentile's position
-            pos = (len(data) - 1) * 0.25
-            print("pos", pos, type(pos))
+            pos = int((count[j] - 1) * 0.75)
                     
             # value at the position
-            # tmp1 = data[int(pos)]
-            # tmp2 = data[int(pos) + 1]
-            # val = (tmp1 + tmp2) / 2
+            tmp1 = data[i][pos]
+            tmp2 = data[i][pos + 1]
+            val = (tmp1 + tmp2) / 2
                             
-        perc_25_list.append(val)
-    return(perc_25_list)
+            j+=1
+            perc_75_list.append(val)
+    return(perc_75_list)
 
-def percentile(data, perc):
+def _percentile(data, col_index, count, perc):
     '''
-    calculate percentile 
+    calculate percentile     
     perc = 25, 50, 75
+    returns an ordered list of all percentile 25
     '''
 
-    if type(data[0]) is not float and type(data[0]) is not int:
-        # print()  # à modifier ensuite (à mettre dans le tableau de resulats)
-        return ("We can't calculate without numbers")
+    perc_list = []
+    j = 0
+    for i in data:
+        val = 0
+        if i in col_index:
+            # new_count = 0
+            # for c in data[i]:
+            #     if isfinite(c):
+            #         data_ordered = list(data[i])
+            #         new_count += 1
+            data_ordered = sorted(c for c in data[i] if isfinite(c))
+
+            l = len(data_ordered)
+
+            if l == 0:
+                perc_list.append(float('nan'))
+                continue
+
+            # Calculate theoretical position
+            pos = (l - 1) * (perc / 100)
+
+            lower = int(pos)
+            upper = min(lower + 1, l - 1)
+
+            # Linear interpolation
+            weight = pos - lower
+
+            val = (
+                data_ordered[lower] * (1 - weight)
+                + data_ordered[upper] * weight
+            )
+
+
+            # # percentile's position
+            # pos = ((l - 1) * (perc / 100))
+            # # pos = int((len(data_ordered) - 1) * (perc / 100))
+
+
     
-    # percentile's position
-    pos = (len(data) - 1) * (perc  / 100)
+            # # value at the position
+            # tmp1 = data_ordered[pos]
+            # tmp2 = data_ordered[pos + 1]
+            # val = (tmp1 + tmp2) / 2
+            # # print("val", val)
+                            
+            # j+=1
+            perc_list.append(val)
+    return(perc_list)
+ 
 
-    # value at the position
-    tmp1 = data[int(pos)]
-    tmp2 = data[int(pos) + 1]
-    val = (tmp1 + tmp2) / 2
+    # if type(data[0]) is not float and type(data[0]) is not int:
+    #     # print()  # à modifier ensuite (à mettre dans le tableau de resulats)
+    #     return ("We can't calculate without numbers")
+    
+    # # percentile's position
+    # pos = (len(data) - 1) * (perc  / 100)
 
-    return (val)
+    # # value at the position
+    # tmp1 = data[int(pos)]
+    # tmp2 = data[int(pos) + 1]
+    # val = (tmp1 + tmp2) / 2
+
+    # return (val)
