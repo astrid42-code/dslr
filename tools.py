@@ -35,15 +35,16 @@ def _mean(data, col_index, count):
     returns an ordered list of all means
     '''
     mean_list = []
+    j = 0
     for i in data:
         if i in col_index:
             _mean = 0.0
-            j = 0
             for c in data[i]:
                 # print(c)
                 if isfinite(c):
                     _mean += c
             _mean /= count[j]
+
             # print("mean", mean)
             mean_list.append(_mean)
             j+=1
@@ -87,48 +88,28 @@ def _max(data, col_index):
     return(max_list)
 
 
-def _std(data, mean):
+def _std(data, col_index, mean, count):
     '''
     calculate standard deviation
     '''
-    
-    res = 0.0
 
-    for i in data:
-        if type(i) is not float and type(i) is not int:
-            # print("coucou")
-            return ("We can't calculate without numbers")
-        if isnan(i):    
-            continue
-            # i = 0
-        res += (float(i) - mean) ** 2
-    # print(res)
-    return (res / len(data))
-
-
-def _perc_75(data, col_index, count):
-    '''
-    calculate percentile 25
-    returns an ordered list of all percentile 25
-    '''
-
-    perc_75_list = []
+    std_list = []
     j = 0
     for i in data:
-        val = 0
         if i in col_index:
-            # print(j, count[j])
-            # percentile's position
-            pos = int((count[j] - 1) * 0.75)
-                    
-            # value at the position
-            tmp1 = data[i][pos]
-            tmp2 = data[i][pos + 1]
-            val = (tmp1 + tmp2) / 2
-                            
-            j+=1
-            perc_75_list.append(val)
-    return(perc_75_list)
+            res = 0.0
+            for c in data[i]:
+                if isfinite(c):
+                    res += (c - mean[j]) ** 2
+            if count[j] > 1:
+                _std = (res / (count[j] - 1)) ** 0.5
+            else:
+                std = float('nan')
+            std_list.append(_std)
+            j += 1
+    # print(std_list)
+    return (std_list)
+
 
 def _percentile(data, col_index, count, perc):
     '''
@@ -142,11 +123,6 @@ def _percentile(data, col_index, count, perc):
     for i in data:
         val = 0
         if i in col_index:
-            # new_count = 0
-            # for c in data[i]:
-            #     if isfinite(c):
-            #         data_ordered = list(data[i])
-            #         new_count += 1
             data_ordered = sorted(c for c in data[i] if isfinite(c))
 
             l = len(data_ordered)

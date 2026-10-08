@@ -40,7 +40,7 @@ def fill_df(data, df, col_index):
 
     count = _count(data, col_index)
     mean = _mean(data, col_index, count)
-    # std = []
+    std = _std(data, col_index, mean, count)
     mini = _min(data, col_index)
     maxi = _max(data, col_index)
     perc_25 = _percentile(data, col_index, count, 25)
@@ -58,6 +58,7 @@ def fill_df(data, df, col_index):
             df.loc["25%", df.columns[n]] = perc_25[n]
             df.loc["50%", df.columns[n]] = perc_50[n]
             df.loc["75%", df.columns[n]] = perc_75[n]
+            df.loc["Std", df.columns[n]] = std[n]
             n+=1
 
     print(df)
@@ -68,47 +69,6 @@ def my_describe(data):
     col_index = find_col_index(data)
     df = create_df(col_index)
     fill_df(data, df, col_index)
-
-def tools(data):
-    
-    # print(data[2][4])
-    for i in range(len(data)):
-        # print(i, data[i])
-        count += [tools._count(data[i])]
-        mean += [tools._mean(data[i])]
-        tmp = mean[i]
-        # print(tmp)
-        std += [tools._std(data[i], tmp)]
-        min_ += [tools._min(data[i])]
-        max_ += [tools._max(data[i])]
-        perc_25 += [tools.percentile(data[i], 25)]
-        # perc_50 += [tools.percentile(data[i], 50)]
-        # perc_75 += [tools.percentile(data[i], 75)]
-   
-    # print("count", count)
-    # print("mean", mean)
-    # print("std", std)
-    # print("min", min_)
-    # print("max", max_)
-    # print("25", perc_25)
-    # print("50", perc_50)
-    # print("75", perc_75)
-
-    res = {
-            "count": count, 
-            "mean": mean,
-            "std": std, 
-            "min": min_, 
-            "max": max_, 
-            "perc 25": perc_25, 
-            "perc 50": perc_50, 
-            "perc 75": perc_75
-    }
-    # print("coucou")
-    # print('{}'.format(res), sep='\n')
-
-    # for key, value in res.items():
-    #     print(f"{key}: {value}")
 
 
 def main():

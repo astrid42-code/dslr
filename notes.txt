@@ -47,6 +47,8 @@ h=(5−1)×0.25=1
 Donc le résultat est 20, et non (20 + 30) / 2 = 25
 
 
+
+
 > afficher pour chaque feature les resultats avec les fonctions ci-dessus
 
 the main difference: 
